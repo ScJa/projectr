@@ -22,7 +22,6 @@ node_modules
 .xml
 .idea/
 
-config.js
 
 # Doc Build
 docs/

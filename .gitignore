@@ -2,4 +2,4 @@
 .directory
 node_modules
 web/app/resources/uploads/avatar
-config.js.locale
+config.js
