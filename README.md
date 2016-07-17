@@ -32,4 +32,4 @@ Sample-Data inserts are provided in the 'db' folder
 ## Notes
 
 This website was created in the scope of the subject "Advanced Software Engineering" at the Technical University of Vienna.
-Co-Authors: Belk Stefan, Bogomolov Bernd, Hanreich Stefan, Sederl Johannes
+Co-Authors: Belk Stefan, Bogomolov Bernd (berndbogo), Hanreich Stefan, Sederl Johannes
