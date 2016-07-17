@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="section">
+        <a class="waves-effect waves-light btn" href="/user/myprojects">
+            <i class="material-icons left">chevron_left</i>{{ __("Back") }}
+        </a>
+
+    </div>
+
+    <div class="divider"></div>
+
+    <h5 class="header teal-text text-darken-1">{{ __("Recommendations") }}</h5>
+
+    <div class="section">
+        {% for position in positions %}
+            <div class="card">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col m2">
+                            <h5>{{ position.name }}</h5>
+                            <div class="row">
+                                <div class="col m6">{{ __("Type") }}:</div>
+                                <div class="col m6">{{ position.type }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col m6">{{ __("Budget") }}:</div>
+                                <div class="col m6">{{ position.budget }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col m6">{{ __("Hours") }}:</div>
+                                <div class="col m6">{{ position.hours }}</div>
+                            </div>
+                        </div>
+                        <div class="col m10">
+                            <div id="pos_{{position.id}}">
+                                {% if ""+position.id in recommendations %}
+                                    {% set data = recommendations[""+position.id] %}
+                                    {% set i = 0 %}
+                                    {% for index in range(0, 50) %}
+
+                                        {% if index in data %}
+                                            {% if i == 0 %}
+                                                <div class="row">
+                                            {% endif %}
+                                                <div class="col m3">
+                                                    <div class="card" >
+                                                        <div class="card-content">
+                                                            <a href="/user/{{ data[index]['id'] }}">
+                                                                {{ data[index]["firstName"]+" "+data[index]["lastName"] }}
+                                                            </a>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{{ __("Match Score") }}</td><td>{{ data[index]["score"]|round(8, 'floor') }}</td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                        <div class="card-action center-align">
+                                                            <a href="/user/myprojects/recommendation/{{position.id}}/accept/{{ data[index]['id'] }}" class="amber-text text-darken-1 cursor-pointer">
+                                                                {{ __("Accept") }}
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% set i = i + 1 %}
+                                            {% if i == 4 %}
+                                                </div>
+                                                {% set i = 0 %}
+                                            {% endif %}
+                                        {% endif %}
+
+                                    {% endfor %}
+                                {% else %}
+                                    {{ __("No recommendations possible. Maybe you did not add skills to your position?") }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

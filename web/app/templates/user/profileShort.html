@@ -1,0 +1,23 @@
+<div class="">
+    <div class="center center-align">
+        <a href="/user/{{user.id}}">{{ user.getAvatar(60, 60) | safe }}</a>
+    </div>
+    <div class="center center-align">
+        <a href="/user/{{user.id}}" target="_blank">{{ user.first_name+" "+user.last_name }}</a>
+    </div>
+    <div class="">
+        {% if user.average %}
+            <p class="center">
+                <select class="showrating" data-target="average-rating-{{user.id}}">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                <input id="average-rating-{{user.id}}" value="{{ user.average }}" readonly="readonly" type="hidden"/>
+            </p>
+        {% endif %}
+    </div>
+</div>

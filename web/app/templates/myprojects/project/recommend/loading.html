@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="section">
+        <a class="waves-effect waves-light btn" href="/user/myprojects">
+            <i class="material-icons left">chevron_left</i>{{ __("Back") }}
+        </a>
+    </div>
+
+    <div class="divider"></div>
+
+    <h5 class="header teal-text text-darken-1">{{ __("Recommendations") }}</h5>
+    <div class="section center-align center" id="recommendResult">
+        <img src="/images/loading.gif" id="recommendLoadingImg">
+        <script type="application/javascript">
+            $("#recommendResult").load("{{ url }}");
+        </script>
+    </div>
+</div>
+{% endblock %}

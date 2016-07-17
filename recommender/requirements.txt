@@ -1,0 +1,11 @@
+numpy
+scipy
+scikit-learn
+
+psycopg2
+sqlalchemy
+
+requests
+requests_oauthlib
+
+flask

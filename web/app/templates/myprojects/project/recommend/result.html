@@ -1,0 +1,80 @@
+{% for position in positions %}
+<div class="card">
+    <div class="card-content">
+        <div class="row">
+            <div class="col m2 left-align left">
+                <h5 class="teal-text">{{ position.name }}</h5>
+                <div class="row">
+                    <div class="col m6">{{ __("Type") }}:</div>
+                    <div class="col m6">{{ position.type }}</div>
+                </div>
+                <div class="row">
+                    <div class="col m6">{{ __("Budget") }}:</div>
+                    <div class="col m6">{{ position.budget }}</div>
+                </div>
+                <div class="row">
+                    <div class="col m6">{{ __("Hours") }}:</div>
+                    <div class="col m6">{{ position.hours }}</div>
+                </div>
+            </div>
+            <div class="col m10">
+                <div id="pos_{{position.id}}">
+                    {% if ""+position.id in recommendations %}
+                        {% set data = recommendations[""+position.id] %}
+                        {% set i = 0 %}
+                        {% for index in range(0, 50) %}
+
+                            {% if index in data %}
+                                {% if i == 0 %}
+                                <div class="row">
+                                {% endif %}
+
+                                <div class="col m3">
+                                    <div class="container">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col s6 m6 l6 left grey-text left-align">{{ "# "+(index+1) }}</div>
+                                                <div class="col s6 m6 l6 right grey-text right-align">{{ data[index]["score"]|round(8, 'floor') }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="row" id="user{{data[index]['id']}}">
+                                            <script type="application/javascript">
+                                                $("#user{{data[index]['id']}}").load("/user/profileShort/{{ data[index]['id'] }}");
+                                            </script>
+                                        </div>
+                                        <div class="">
+                                            <a href="/user/myprojects/recommendation/{{position.id}}/accept/{{data[index]['id']}}/{{data[index]['score']}}"
+                                               class="waves-effect waves-light btn amber darken-1 cursor-pointer">
+                                                {{ __("Accept") }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% set i = i + 1 %}
+                                {% if i == 4 %}
+                                    </div>
+                                    {% set i = 0 %}
+                                {% endif %}
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if i != 0 %}
+                        </div>
+                        {% endif %}
+
+                    {% else %}
+                        {{ __("No recommendations possible. Maybe you did not add skills to your position?") }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="divider"></div>
+{% endfor %}
+
+<script type="application/javascript">
+    renderRatings();
+</script>

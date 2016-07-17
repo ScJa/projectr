@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="section projectr-bg-img">
+    <div id="index-banner" class="container">
+        <div class="section no-pad-bot">
+            <div class="container">
+                <br><br>
+                <div class="row center">
+                    <h3 class="header col s12 white-text">{{ __("Welcome Back!") }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col s12 m4">
+                <div class="icon-block card hoverable">
+                    <h2 class="center brown-text"><i class="material-icons medium">mode_edit</i></h2>
+                    <h5 class="center projectr-pink">{{ __("Create") }}</h5>
+                    {% if user.owner %}
+                        <div class="container center light">
+                            <table>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Projects") }}</td><td>{{projectOwner.projects}}</td></tr>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Open Positions") }}</td><td>{{projectOwner.openPositions}}</td></tr>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Considering Positions") }}</td><td>{{projectOwner.consideringPositions}}</td></tr>
+                            </table>
+                        </div>
+                        <div class="section center">
+                            <a class="btn waves-effect waves-light" href="/user/myprojects">
+                                {{ __("Show") }}
+                                <i class="material-icons right">send</i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="center light">
+                            {{ __("You are currently not registered as project owner.") }}
+                        </div>
+                        <div class="section center">
+                            <a class="btn waves-effect waves-light" href="/user/edit">
+                                {{ __("Enable") }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="col s12 m4">
+                <div class="icon-block card hoverable">
+                    <h2 class="center brown-text"><i class="material-icons medium">settings</i></h2>
+                    <h5 class="center projectr-pink">{{ __("Develop") }}</h5>
+                    {% if user.developer %}
+                        <div class="container center light">
+                            <table>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Projects") }}</td><td>{{developer.projects}}</td></tr>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Match Requests") }}</td><td>{{developer.matchRequests}}</td></tr>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Hours / Week") }}</td><td>{{developer.hours}}</td></tr>
+                            </table>
+                        </div>
+                        <div class="section center">
+                            <a class="btn waves-effect waves-light" href="/user/developer">
+                                {{ __("Show") }}
+                                <i class="material-icons right">send</i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="center light">
+                            {{ __("You are currently not registered as developer.") }}
+                        </div>
+                        <div class="section center">
+                            <a class="btn waves-effect waves-light" href="/user/edit">
+                                {{ __("Enable") }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+
+            <div class="col s12 m4">
+                <div class="icon-block card hoverable">
+                    <h2 class="center brown-text"><i class="material-icons medium">web</i></h2>
+                    <h5 class="center projectr-pink">{{ __("Design") }}</h5>
+                    {% if user.designer %}
+                        <div class="container center light">
+                            <table>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Projects") }}</td><td>{{designer.projects}}</td></tr>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Match Requests") }}</td><td>{{designer.matchRequests}}</td></tr>
+                                <tr class="grey-text text-darken-1 large-text"><td>{{ __("Hours / Week") }}</td><td>{{designer.hours}}</td></tr>
+                            </table>
+                        </div>
+                        <div class="section center">
+                            <a class="btn waves-effect waves-light" href="/user/designer">
+                                {{ __("Show") }}
+                                <i class="material-icons right">send</i>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="center light">
+                            {{ __("You are currently not registered as designer.") }}
+                        </div>
+                        <div class="section center">
+                            <a class="btn waves-effect waves-light" href="/user/edit">
+                                {{ __("Enable") }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="/css/materialize.min.css">
+        <!-- Our custom CSS -->
+        <link rel="stylesheet" href="/css/style.css">
+        <!--jQuery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+        <script type="text/javascript" src="/js/socketio.min.js"></script>
+
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+
+    <body>
+        <form action="/user/upload-avatar" enctype="multipart/form-data" method="POST" id="avatar-form">
+            <h5>Choose your Avatar</h5>
+            <div class="file-field input-field">
+                <div class="btn">
+                    <span>{{ __("File") }}</span>
+                    <input type="file" name="avatar" id="avatar">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text">
+                </div>
+            </div>
+            <button class="amber darken-1 btn invisible" type="submit" name="action" value="editProfile">{{ __("Save Changes") }}</button>
+        </form>
+
+        <div class="progress invisible">
+            <div class="indeterminate"></div>
+        </div>
+
+        {% if user.avatar %}
+            <div class="row">
+                {{user.getAvatar(150, 150) | safe}}
+            </div>
+        {% endif %}
+
+        <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+
+        <!-- Compiled and minified Materialize JavaScript -->
+        <script type="text/javascript" src="/js/materialize.min.js"></script>
+
+        <!-- Script for initializing the Parallax template -->
+        <script type="text/javascript" src="/js/initParallaxTemplate.js"></script>
+
+        <!-- Our projectr JavaScript -->
+        <script type="text/javascript" src="/js/projectr.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#avatar").change(function(){
+                    $("#avatar-form").submit();
+                    $(".progress").removeClass("invisible");
+                });
+            });
+        </script>
+    </body>
+</html>

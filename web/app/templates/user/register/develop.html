@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h4 class="header teal-text text-darken-1">{{ __("Register") }} - {{ __("Developer") }}</h4>
+    </div>
+    <div class="row center-align valign-wrapper">
+        <div class="col s4 valign">
+            <div class="row valign-wrapper">
+                <div class="col s6 valign">
+                    <h5 class="projectr-pink">{{ __("Develop") }}</h5>
+                </div>
+                <div class="col s6 valign">
+                    <h5 class="center brown-text"><i class="material-icons medium">settings</i></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col s4 valign">
+            <input type="checkbox" id="check-later" name="later" />
+            <label for="check-later" class="black-text large-text">{{ __("Enter developer info later")}}</label>
+        </div>
+        <div class="col s4 valign">
+            <form action="{{ skipAction }}" method="get">
+                <button id="skip-btn" disabled="disabled" type="submit" class="grey btn" >{{ __("Next") }}<i class="material-icons right">send</i></button>
+            </form>
+        </div>
+    </div>
+    <div class="divider"></div>
+    {% include "error_messages.html" %}
+
+    {% include "user/edit/edit_developer_temp.html" %}
+</div>
+{% endblock %}

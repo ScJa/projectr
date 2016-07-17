@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="section">
+            <a class="waves-effect waves-light btn" href="/user/myprojects">
+                <i class="material-icons left">chevron_left</i>{{ __("Back") }}
+            </a>
+        </div>
+    </div>
+    <div class="divider"></div>
+    {% include "error_messages.html" %}
+
+    <div class="section">
+        <div class="row valign-wrapper">
+            <div class="col valign">
+                <h5 class="header teal-text text-darken-1">{{ __("New Project") }}</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="row section">
+        <form action= "/user/myprojects/create" method="post" class="col m6 s12">
+            <div class="row">
+                <div class="input-field col s12 m8">
+                    <input type="text" id="name" name="name" />
+                    <label for="name">{{ __("Name") }}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m8">
+                    <textarea id="short_description" class="materialize-textarea" name="short_description"></textarea>
+                    <label for="short_description">{{ __("Short description") }}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m8">
+                    <textarea id="public_description" class="materialize-textarea" name="public_description"></textarea>
+                    <label for="public_description">{{ __("Public description") }}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m8">
+                    <textarea id="private_description" class="materialize-textarea" name="private_description"></textarea>
+                    <label for="private_description">{{ __("Private description") }}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m8">
+                    <input type="number" id="budget" name="budget" />
+                    <label for="budget">{{ __("Budget") }}</label>
+                </div>
+            </div>
+
+            <button class="amber darken-1 btn" type="submit" name="action">{{ __("Create") }}</button>
+        </form>
+        <div class="col m6 s12 valign">
+            <div class="card-panel z-depth-3">
+                <div class="row valign-wrapper">
+                    <div class="col s6 valign">
+                        <h4 id="expl-header-create" class="header center-align projectr-pink">{{ __("Create") }}</h4>
+                    </div>
+                    <div class="col s6 valign">
+                        <h5 class="center teal-text"><i id="expl-icon" class="material-icons medium">mode_edit</i></h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <p id="desc-create-1" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register create desc 1") }}
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Name") }}:</span>
+                        {{ __("register create name desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Short description") }}:</span>
+                        {{ __("register create short desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Public description") }}:</span>
+                        {{ __("register create pub desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Private description") }}:</span>
+                        {{ __("register create priv desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Budget") }}:</span>
+                        {{ __("register create budg desc") }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

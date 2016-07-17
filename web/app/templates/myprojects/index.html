@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="section">
+        <div class="row valign-wrapper">
+            <div class="col valign">
+                <h4 class="projectr-pink">{{ __("Create") }}</h4>
+            </div>
+            <div class="col valign">
+                <h5 class="center"><i class="material-icons medium">mode_edit</i></h5>
+            </div>
+            <div class="col m6">
+                <div class="right-align right">
+                    <div class="row">
+                        <div class="col">
+                            <i class="small material-icons grey-text center" title="{{__('Open')}}">lock_open</i>{{__("Open")}}
+                        </div>
+                        <div class="col">
+                            <i class="small material-icons green-text center" title="{{__('Accepted')}}">lock</i>{{__("Accepted")}}
+                        </div>
+                        <div class="col">
+                            <i class="small material-icons orange-text center" title="{{__('Considering')}}">lock_open</i>{{__("Considering")}}
+                        </div>
+                        <div class="col">
+                            <i class="small material-icons red-text center" title="{{__('Rejected')}}">pan_tool</i>{{__("Rejected")}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+        <div class="row valign-wrapper">
+            <div class="col valign">
+                <h5 class="header teal-text text-darken-1">{{ __("Your Projects") }}</h5>
+            </div>
+            <div class="col m3 right-align valign">
+                <a class="btn amber darken-1" href="/user/myprojects/create">{{ __("Create new project") }}</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section">
+        <div class="row">
+            <div class="">
+                {% for project in projects %}
+                <div class="card">
+                    <div class="card-content">
+                        <div class="row valign-wrapper">
+                            <div class="col m3 valign">
+                                <span class="card-title">
+                                    <a class="teal-text text-darken-1 cursor-pointer" href="/user/myprojects/project/{{ project.id }}/public">
+                                        {{ project.name }}
+                                    </a>
+                                </span>
+                            </div>
+                            {% if project.status == "running" %}
+                            <div class="col m4 green-text valign">{{ __(project.getUpperCaseStatus()) }}</div>
+                            {% elif project.status == "stopped" %}
+                            <div class="col m4 orange-text valign">{{ __(project.getUpperCaseStatus()) }}</div>
+                            {% else %}
+                            <div class="col m4 red-text valign">{{ __(project.getUpperCaseStatus()) }}</div>
+                            {% endif %}
+
+                            <div class="col m4 grey-text valign">{{ project.getFormattedDate() }}</div>
+                            <div class="col m1 valign">
+                                <i class="small material-icons black-text center projectViewToggle" title="Show More" data-target="project{{project.id}}">list</i>
+                            </div>
+                        </div>
+                        <div class="projectView" id="project{{project.id}}">
+                            <div class="divider"></div>
+                            <div class="row section">
+                                <div class="col m3">{{ __("Positions") }}</div>
+                                <div class="col m9" id="positions{{project.id}}">
+                                    {% set i = 0 %}
+                                    {% set hasOpenPos = false %}
+
+                                    {% for position in project.Positions %}
+                                    {% if i == 0%}
+                                    <div class="row">
+                                        {% endif %}
+                                        {% set i = i + 1 %}
+
+                                        <div class="col s3">
+                                            <div class="row">
+                                                <div class="col m9 teal-text left-align left">{{ position.name }}</div>
+                                                <div class="col m3 right right-align">
+                                                {% if position.status == "open" %}
+                                                    <i class="small material-icons grey-text center" title="{{__('Open')}}">lock_open</i>
+                                                {% elif position.status == "accepted" %}
+                                                    <i class="small material-icons green-text center" title="{{__('Accepted')}}">lock</i>
+                                                {% elif position.status == "rejected" %}
+                                                    <i class="small material-icons red-text center" title="{{__('Rejected')}}">pan_tool</i>
+                                                {% elif position.status == "consider" %}
+                                                    <i class="small material-icons orange-text center" title="{{__('Considering')}}">lock_open</i>
+                                                {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="center center-align">
+                                                {% if position.User %}
+                                                <a href="/user/{{user.id}}">{{ user.getAvatar(60, 60) | safe }}</a>
+                                                {% else %}
+                                                <div>
+                                                    <img src="/images/default.png" alt="not filled" class="circle" style="height: 60px; width: 60px">
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="center center-align">
+                                                {% if project.status != "running" %}
+                                                    {% set hasOpenPos = false %}
+                                                {% elif position.status == "open" or position.status == "rejected" %}
+                                                    <div>
+                                                        <a class="amber-text text-darken-1 cursor-pointer" href="/user/myprojects/project/{{project.id}}/recommend/{{position.id}}">
+                                                            {{ __("Recommendations") }}
+                                                        </a>
+                                                    </div>
+                                                    {% set hasOpenPos = true %}
+                                                {% endif %}
+
+                                                {% if position.status == "accepted" or position.status == "consider" %}
+                                                    <a href="/user/{{position.User.id}}">{{ position.User.first_name+" "+position.User.last_name }}</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
+                                        {% if i == 4%}
+                                        {% set i = 0 %}
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+
+                                    {% if i != 0%}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col m3">{{ __("Budget") }}</div>
+                            <div class="col m9">{{ project.budget }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col m3">{{ __("Description") }}</div>
+                            <div class="col m9">{{ project.short_description }}</div>
+                        </div>
+                    </div>
+
+                    <div class="card-action">
+                        <a class="amber-text text-darken-1 cursor-pointer" href="/user/myprojects/project/{{ project.id }}/edit">{{ __("Edit Project") }}</a>
+                        <a class="amber-text text-darken-1 cursor-pointer" href="/user/myprojects/project/{{ project.id }}/positions">{{ __("Edit Positions") }}</a>
+                        <!--{% if hasOpenPos %}-->
+                        <!--<a class="blue-text text-darken-1 cursor-pointer" href="/user/myprojects/project/{{ project.id }}/recommend">{{ __("Recommendations") }}</a>-->
+                        <!--{% endif %}-->
+                        <a class="red-text text-darken-2 right cursor-pointer" href="/user/myprojects/project/{{ project.id }}/delete">{{ __("Delete") }}</a>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

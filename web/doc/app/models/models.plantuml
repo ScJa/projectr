@@ -1,0 +1,100 @@
+@startuml
+class User{
+-first_name
+-last_name
+-passwordhash
+-avatar
+-email
+-owner
+-developer
+-designer
+-free_hours
+-avg_rating_owner
+-avg_rating_developer
+-avg_rating_designer
+
+}
+
+class LinkedService{
+-token
+-service_id
+-refreshToken
+-serviceUserId
+-data
+}
+
+class Notifications{
+-content
+-read
+
+}
+
+
+class Rating{
+-rating
+-feedback
+}
+
+class Position{
+-hours
+-name
+-type
+-budget
+-status
+-matchScore
+}
+
+class Project{
+-name
+-short_description
+-private_description
+-public_description
+-budget
+-status
+}
+
+class Position_Skill{
+-weight
+}
+
+
+class Skill{
+-name
+}
+
+
+class User_Skill{
+-weight
+}
+
+class ChatMessages{
+-content
+
+}
+
+
+class Conversation{
+
+}
+
+
+
+User               "1"  -up-  "*"  LinkedService
+User               "1"   --      "*"  Rating
+User               "1"   --      "*"  User_Skill
+User               "1"   --      "*"  Project
+User               "1"   --      "*"  Position
+User_Skill         "*"   --      "1"  Skill
+Skill              "1"   --      "*"  Skill
+Skill              "1"   --      "*"  Position_Skill
+Position_Skill     "*"  -up-     "1"  Position
+Position           "*"  -left-   "1"  Project
+Position           "1"  -up-     "*"  Rating
+
+
+
+Conversation       "*"  -right-  "*"  User
+ChatMessages       "*"  -right-  "1"  User
+Conversation       "1"  -right-  "*"  ChatMessages
+User               "1"  -right-  "*"  Notifications
+@enduml

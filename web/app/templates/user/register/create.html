@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h4 class="header teal-text text-darken-1">{{ __("Register") }} - {{ __("Project owner") }}</h4>
+    </div>
+    <div class="row center-align valign-wrapper">
+        <div class="col s4 valign">
+            <div class="row valign-wrapper">
+                <div class="col s6 valign">
+                    <h5 class="projectr-pink">{{ __("Create") }}</h5>
+                </div>
+                <div class="col s6 valign">
+                    <h5 class="center"><i class="material-icons medium">mode_edit</i></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col s4 valign">
+            <input type="checkbox" id="check-later" name="later" />
+            <label for="check-later" class="black-text large-text">{{ __("Create project later")}}</label>
+        </div>
+        <div class="col s4 valign">
+            <form action="{{ skipAction }}" method="get">
+                <button id="skip-btn" disabled="disabled" type="submit" class="grey btn" >{{ __("Next") }}<i class="material-icons right">send</i></button>
+            </form>
+        </div>
+    </div>
+    <div class="divider"></div>
+    {% include "error_messages.html" %}
+
+    <div id="form-section" class="row section valign-wrapper">
+        <form id="create-reg-form" action="/user/register/create" method="post" class="col s12 m6 offset-m1">
+            <div class="row">
+                <h5 class="header teal-text text-darken-1">{{ __("Project info") }}</h5>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m10">
+                    <label for="name">{{ __("Name") }}</label>
+                    <input type="text" id="name" name="name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m10">
+                    <textarea id="short_description" class="materialize-textarea" name="short_description"></textarea>
+                    <label for="short_description">{{ __("Short description") }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m10">
+                    <textarea id="public_description" class="materialize-textarea" name="public_description"></textarea>
+                    <label for="public_description">{{ __("Public description") }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m10">
+                    <textarea id="private_description" class="materialize-textarea" name="private_description"></textarea>
+                    <label for="private_description">{{ __("Private description") }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="file-field input-field col s12 m10">
+                    <input type="number" id="budget" name="budget" />
+                    <label for="budget">{{ __("Budget") }}</label>
+                </div>
+            </div>
+            <div class="row section">
+                <div class="container col s12 m10 card-panel z-depth-3 valign-wrapper">
+                    <h5 class="left valign"><i class="material-icons medium">info</i></h5>
+                    <p class="center grey-text text-darken-1 valign">{{ __("Add participants later") }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <button class="amber darken-1 btn" id="submit-btn" type="submit" name="action">{{ __("Next") }}<i class="material-icons right">send</i></button>
+            </div>
+        </form>
+        <div class="col s12 m5 valign">
+            <div class="card-panel z-depth-3">
+                <div class="row valign-wrapper">
+                    <div class="col s6 valign">
+                        <h4 id="expl-header-create" class="header center-align projectr-pink">{{ __("Create") }}</h4>
+                    </div>
+                    <div class="col s6 valign">
+                        <h5 class="center teal-text"><i id="expl-icon" class="material-icons medium">mode_edit</i></h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <p id="desc-create-1" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register create desc 1") }}
+                    </p>
+                </div>
+                <div class="row">
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Name") }}:</span>
+                        {{ __("register create name desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Short description") }}:</span>
+                        {{ __("register create short desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Public description") }}:</span>
+                        {{ __("register create pub desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Private description") }}:</span>
+                        {{ __("register create priv desc") }}
+                    </p>
+                    <p class="large-text grey-text text-darken-1">
+                        <span class="projectr-pink">{{ __("Budget") }}:</span>
+                        {{ __("register create budg desc") }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#check-later').change(function() {
+            if ($(this).is(":checked")) {
+                $("#skip-btn").removeAttr("disabled").removeClass("grey").addClass("amber darken-1");
+
+                $("#submit-btn").removeClass("amber darken-1").addClass("grey");
+
+                $("#create-reg-form").find("input, textarea, button").attr("disabled","disabled");
+            } else {
+                $("#skip-btn").attr("disabled", "disabled").removeClass("amber darken-1").addClass("grey");
+
+                $("#submit-btn").removeClass("grey").addClass("amber darken-1");
+
+                $("#create-reg-form").find("input, textarea, button").removeAttr("disabled");
+            }
+        });
+
+    });
+</script>
+{% endblock %}

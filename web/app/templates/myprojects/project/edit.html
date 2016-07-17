@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="section">
+        <a class="waves-effect waves-light btn" href="/user/myprojects">
+            <i class="material-icons left">chevron_left</i>{{ __("Back") }}
+        </a>
+    </div>
+    <div class="divider"></div>
+</div>
+<div class="section" id="projectContent">
+    <div class="container">
+        {% include "error_messages.html" %}
+
+        <div class="row">
+            <form action="/user/myprojects/project/{{ project.id }}/edit" method="post" class="col s12">
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="name" name="name" value="{{ project.name }}"/>
+                        <label for="name">{{ __("Name") }}</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input type="number" id="budget" name="budget" value="{{ project.budget }}"/>
+                        <label for="budget">{{ __("Budget") }}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <textarea id="short_description" class="materialize-textarea" name="short_description">{{ project.short_description }}</textarea>
+                        <label for="short_description">{{ __("Short description") }}</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <textarea id="public_description" class="materialize-textarea" name="public_description">{{ project.public_description }}</textarea>
+                        <label for="public_description">{{ __("Public description") }}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <textarea id="private_description" class="materialize-textarea" name="private_description">{{ project.private_description }}</textarea>
+                        <label for="private_description">{{ __("Private description") }}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <button class="amber darken-1 btn" type="submit" name="action" value="edit">{{ __("Save Changes") }}</button>
+                    </div>
+                    <div class="col s12 m3 l3 right-align">
+                        <button class="amber darken-1 btn" type="submit" name="action" value="delete">{{ __("Close") }}</button>
+                    </div>
+                    <div class="col s12 m3 l3 right-align">
+                        <button class="red darken-2 btn" type="submit" name="action" value="delete">{{ __("Delete") }}</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $('textarea').focus();
+    $('input').focus();
+</script>
+{% endblock %}

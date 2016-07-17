@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row valign-wrapper">
+        <div class="col valign">
+            <h4 class="header projectr-pink">{{ __("Edit Designer Profile") }}</h4>
+        </div>
+        <div class="col m4 right-align valign">
+            <a class="btn right-align" href="/user/designer">{{ __("Back") }}</a>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+    {% include "error_messages.html" %}
+
+    {% include "user/edit/edit_designer_temp.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% include "error_messages.html" %}
+
+    <a href="/linkedin/login">Please log in.</a>
+
+    <a href="/linkedin/auth/linkedin">Login with linkedin</a>
+
+    <p>ID: <%= linkedinUser.id %></p>
+    <p>Name: <%= linkedinUser.displayName %></p>
+
+</div>
+    {% endblock %}
+
+
+
+
+

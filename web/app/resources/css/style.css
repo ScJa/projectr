@@ -1,0 +1,206 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+header {
+  margin-bottom: 25px;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+
+.projectr3 {
+    background-image: url("/images/projectr3.png");
+    background-repeat: no-repeat;
+    background-position:top center;
+    height: 300px;
+    width: 100%;
+}
+
+.projectr-bg-img {
+    background-image: url("/images/parallax2.jpg");
+    background-repeat: no-repeat;
+    background-position:top center;
+    width: 100%;
+}
+
+.parallax-container {
+  height: 380px;
+}
+
+#userDropdown, #notificationDropdown {
+    margin-top: 64px;
+    min-width: 400px;
+}
+
+#notificationDropdown {
+  width: 140px !important;
+  padding: 5px;
+}
+
+.notificationDate{
+
+}
+
+nav .brand-logo {
+    position: inherit;
+    width: 25%;
+}
+
+nav .brand-slogan {
+    text-align: center;
+    display:inline-block;
+    width: 50%;
+    font-size: 20px;
+}
+
+img {
+    width: 100%;
+}
+
+i{ vertical-align: middle !important; }
+
+#recommendLoadingImg {
+    width: 400px;
+}
+
+footer.page-footer {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #fff;
+}
+
+footer.copyright {
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.large-text {
+    font-size: large !important;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+:not(.btn) > .material-icons {
+    cursor: default;
+    color: #CE0057;
+}
+
+.projectr-pink {
+    color: #CE0057 !important;
+}
+
+.projectr-pink-bg {
+    background-color: #CE0057 !important;
+}
+
+.chip {
+    margin: 2px 2px 2px 2px;
+}
+
+.hidden {
+    display: none;
+}
+
+.skill-panel {
+    min-height: 35px;
+}
+
+.collapsible-header > button {
+    margin: 12px;
+}
+
+.collapsible-form {
+  padding: 15px;
+}
+
+#avatar-modal {
+  min-height: 350px;
+}
+
+#avatar-modal > iframe{
+  width: 100%;
+  min-height: 350px;
+  border: 0;
+}
+.modal-footer > button {
+  margin: 5px;
+}
+
+#avatar-form {
+  margin: 12px;
+}
+
+i.projectViewToggle:hover {
+    cursor: pointer !important;
+    color: #CE0057 !important;
+}
+
+i.profileSendMail:hover {
+    cursor: pointer !important;
+    color: #CE0057 !important;
+}
+
+a {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a.brand-logo:hover {
+    text-decoration: none !important;
+}
+
+a > .collapsible-header {
+  color: black;
+}
+
+.invisible {
+  display: none;
+}
+
+#profile-skills > .divider{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.small-text{
+    font-size: 14px;
+}
+
+.no-vertical-margin {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.s4 > img {
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+.header-container{
+    width: 80%;
+    margin: 0 auto;
+}
+
+.full-width{
+    width: 100% !important;
+}

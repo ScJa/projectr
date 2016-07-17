@@ -1,0 +1,16 @@
+{% if errors %}
+    <div class="row">
+        <ul class="collection with-header">
+            <li class="collection-header red darken-3">
+                <h5 class="white-text title">{{ __("Errors occurred")}}:</h5>
+            </li>
+            {% for error in errors %}
+                <li class="collection-item avatar">
+                    <i class="material-icons medium circle red darken-3">clear</i>
+                    {% if error.path %}<h6 class="title red-text text-darken-3">{{ __(error.path)}}</h6>{% endif %}
+                    {% if error.message %}<i class="red-text text-darken-3">{{ __(error.message) }}</i>{% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

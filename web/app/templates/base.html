@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="/css/materialize.min.css">
+    <!-- Our custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Star rating -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/fontawesome-stars-o.css">
+
+    <!-- Other optional CSS added by child templates -->
+    {% block css %}
+    {% endblock %}
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="/js/jquery-2.1.1.min.js"></script>
+
+    <script type="text/javascript" src="/js/socketio.min.js"></script>
+
+    <!-- jQuery UI minified (for drag & drop functionality) -->
+    <script type="text/javascript" src="/js/jquery-ui-1.11.4.min.js"></script>
+
+    <!-- Compiled and minified Materialize JavaScript -->
+    <script type="text/javascript" src="/js/materialize.min.js"></script>
+
+    <!-- Script for initializing the Parallax template -->
+    <script type="text/javascript" src="/js/initParallaxTemplate.js"></script>
+
+    <!-- Star rating -->
+    <script type="text/javascript" src="/js/jquery.barrating.js"></script>
+
+    <!-- Star rating -->
+    <script type="text/javascript"  src="/js/starrating.js"></script>
+
+    <!-- Our projectr JavaScript -->
+    <script type="text/javascript" src="/js/projectr.js"></script>
+
+    <!-- Other optional JavaScript added by child templates -->
+    {% block javascript %}
+    {% endblock %}
+</head>
+
+<body>
+<header>
+    {% if not user.isAnonymous() %}
+    <ul id="userDropdown" class="dropdown-content">
+        <li><a href="/user/edit" class="projectr-pink">{{ __("Settings") }}</a></li>
+        <li><a href="/user/{{ user.id }}" class="projectr-pink">{{ __("Profile") }}</a></li>
+        <li><a href="/user/conversations" class="projectr-pink">{{ __("Conversations") }}</a></li>
+        {% if user.admin %}
+        <li><a href="/admin" class="projectr-pink">{{ __("Admin-CP") }}</a></li>
+        {% endif %}
+        <li class="divider">
+            <div class="divider"></div>
+        </li>
+        <li><a href="/user/logout" class="projectr-pink">{{ __("Logout") }}</a></li>
+    </ul>
+    {% endif %}
+
+    {% if not user.isAnonymous() %}
+    <ul id="notificationDropdown" class="dropdown-content">
+        {% for notification in user.Notifications %}       
+            <li class="notification">
+                    <a href ="{{notification.url}}">
+                    <div class="notificationDate teal-text">{{notification.getFormattedDate()}}</div>
+                    <div class="notificationContent">{{__(notification.content)}}</div>
+                </a>
+            </li>
+        {% endfor %}
+            <li class="notification">
+                <a href="#" id="clearNotifications" style="color:black;">{{__("Clear all notifications")}}</a>
+            </li>
+    </ul>
+    {% endif %}
+
+    <div class="navbar-fixed">
+        <nav id="navigation" class="teal lighten-1">
+            <div class="nav-wrapper header-container center">
+                <div class="row">
+                    <!--div class="col left l2 m2 s0 hide-on-small-and-down">
+                        {% if user.isAnonymous() %}
+                        <a href="/" class="brand-logo">{{ __("projectr") }}</a>
+                        {% else %}
+                        <a href="/user" class="brand-logo">{{ __("projectr") }}</a>
+                        {% endif %}
+                    </div-->
+
+                    <!--div class="col center l6 m4 s0 hide-on-med-and-down">
+                        <div class="brand-slogan">
+                            {% block brandslogan %}
+                            {{ __("Bring your ideas to life!") }}
+                            {% endblock %}
+                        </div>
+                    </div-->
+
+                    <div class="col left l7 m6 s0">
+                        <div class="left hide-on-small-and-down">
+                            {% if user.isAnonymous() %}
+                            <a href="/" class="brand-logo">{{ __("projectr") }}</a>
+                            {% else %}
+                            <a href="/user" class="brand-logo">{{ __("projectr") }}</a>
+                            {% endif %}
+                        </div>
+                        <div class="right hide-on-med-and-down">
+                            <div class="brand-slogan full-width">
+                                {% block brandslogan %}
+                                {{ __("Bring your ideas to life!") }}
+                                {% endblock %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col right l5 m6 s12">
+                        <ul class="right">
+                            {% if user.isAnonymous() %}
+                            <li><a href="/user/register">{{ __("Register") }}</a></li>
+                            <li><a href="/user/login">{{ __("Login") }}</a></li>
+                            {% else %}
+                            <li>
+                                <a class="dropdown-button" href="#" data-activates="notificationDropdown"><i
+                                        class="material-icons {% if not user.new_notifications%} white-text {% endif %}" id="notificationIcon">settings_input_antenna</i></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-button" href="#" data-activates="userDropdown">{{ user.email }}</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- The main content of child templates -->
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer class="page-footer teal lighten-1">
+    <!-- Optional footer -->
+    {% block footer %}
+    {% endblock %}
+    <div class="container copyright">
+        <i class="tiny material-icons">info_outline</i>
+        {{ __("Copyright - projectr world domination.") }}
+    </div>
+</footer>
+</body>
+</html>

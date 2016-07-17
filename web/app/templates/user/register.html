@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% include "error_messages.html" %}
+
+    <!-- TODO: Add banner here?
+    <div id="index-banner" class="parallax-container">
+        <div class="parallax"><img src="/images/parallax1.jpg" alt="Unsplashed background img 1"></div>
+    </div-->
+    <div class="row valign-wrapper">
+        <form action="/user/register" method="post" class="col s12 m6 offset-m1">
+            <div class="row">
+                <h5 class="header teal-text text-darken-1">{{ __("New? Register!") }}</h5>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m10">
+                    <label for="email">{{ __("E-Mail") }}</label>
+                    <input type="text" id="email" name="email"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 m5">
+                    <input type="text" id="last_name" name="last_name"/>
+                    <label for="last_name">{{ __("Last Name") }}</label>
+                </div>
+                <div class="input-field col s6 m5">
+                    <input type="text" id="first_name" name="first_name"/>
+                    <label for="first_name">{{ __("First Name") }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6 m5">
+                    <label for="password">{{ __("Password") }}</label>
+                    <input type="password" id="password" name="password"/>
+                </div>
+                <div class="input-field col s6 m5">
+                    <label for="repeatpassword">{{ __("Repeat Password") }}</label>
+                    <input type="password" id="repeatpassword" name="repeatpassword"/>
+                </div>
+            </div>
+            <div id="owner_div" class="row valign-wrapper cursor-pointer">
+                <div class="col s6 valign">
+                    <input type="checkbox" class="filled-in" id="owner" name="owner"/>
+                    <label for="owner" class="large-text">{{ __("Project owner") }}</label>
+                </div>
+                <div class="col s6 valign">
+                    <h5 class="center brown-text"><i class="material-icons medium">mode_edit</i></h5>
+                </div>
+            </div>
+            <div id="developer_div" class="row valign-wrapper cursor-pointer">
+                <div class="col s6 valign">
+                    <input type="checkbox" class="filled-in" id="developer" name="developer"/>
+                    <label class="large-text" for="developer">{{ __("Developer") }}</label>
+                </div>
+                <div class="col s6 valign">
+                    <h2 class="center brown-text"><i class="material-icons medium">settings</i></h2>
+                </div>
+            </div>
+            <div id="designer_div" class="row valign-wrapper cursor-pointer">
+                <div class="col s6 valign">
+                    <input type="checkbox" class="filled-in" id="designer" name="designer"/>
+                    <label class="large-text" for="designer">{{ __("Designer") }}</label>
+                </div>
+                <div class="col s6 valign">
+                    <h2 class="center brown-text"><i class="material-icons medium">web</i></h2>
+                </div>
+            </div>
+            <div class="row">
+                <button class="amber darken-1 btn" type="submit" name="action">{{ __("Register") }}<i
+                        class="material-icons right">send</i></button>
+            </div>
+        </form>
+        <div class="col s12 m5 valign">
+            <div class="card-panel z-depth-3">
+                <div class="row">
+                    <h4 id="expl-header-create" class="header center-align projectr-pink">{{ __("Create") }}</h4>
+                    <h4 hidden id="expl-header-develop" class="header center-align projectr-pink">{{ __("Develop")
+                        }}</h4>
+                    <h4 hidden id="expl-header-design" class="header center-align projectr-pink">{{ __("Design") }}</h4>
+                </div>
+                <div class="row">
+                    <p id="desc-create-1" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register create desc 1") }}
+                    </p>
+                    <p hidden id="desc-develop-1" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register develop desc 1") }}
+                    </p>
+                    <p hidden id="desc-design-1" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register design desc 1") }}
+                    </p>
+                </div>
+                <div class="row">
+                    <h5 class="center teal-text"><i id="expl-icon" class="material-icons medium">mode_edit</i></h5>
+                </div>
+                <div class="row">
+                    <p id="desc-create-2" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register create desc 2") }}
+                    </p>
+                    <p hidden id="desc-develop-2" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register develop desc 2") }}
+                    </p>
+                    <p hidden id="desc-design-2" class="large-text center-align grey-text text-darken-1">
+                        {{ __("register design desc 2") }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#owner_div").click(function () {
+            $("#expl-header-develop").hide()
+            $("#expl-header-design").hide();
+            $("#expl-header-create").show();
+
+            $("#desc-develop-1").hide()
+            $("#desc-design-1").hide();
+            $("#desc-create-1").show();
+
+            $("#desc-develop-2").hide()
+            $("#desc-design-2").hide();
+            $("#desc-create-2").show();
+
+            $("#expl-icon").text("mode_edit");
+        });
+
+        $("#developer_div").click(function () {
+            $("#expl-header-create").hide();
+            $("#expl-header-design").hide();
+            $("#expl-header-develop").show();
+
+            $("#desc-create-1").hide();
+            $("#desc-design-1").hide();
+            $("#desc-develop-1").show();
+
+            $("#desc-create-2").hide();
+            $("#desc-design-2").hide();
+            $("#desc-develop-2").show();
+
+            $("#expl-icon").text("settings");
+        });
+
+        $("#designer_div").click(function () {
+            $("#expl-header-create").hide();
+            $("#expl-header-develop").hide();
+            $("#expl-header-design").show();
+
+            $("#desc-create-1").hide();
+            $("#desc-develop-1").hide();
+            $("#desc-design-1").show();
+
+            $("#desc-create-2").hide();
+            $("#desc-develop-2").hide();
+            $("#desc-design-2").show();
+
+            $("#expl-icon").text("web");
+        });
+
+    });
+</script>
+{% endblock %}

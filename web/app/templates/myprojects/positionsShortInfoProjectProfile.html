@@ -1,0 +1,22 @@
+<div class="row">
+    {% for position in positions %}
+    <div class="col s6 m6 l6">
+        <div class="card-panel z-depth-1">
+            {{ position.name }}<br/>
+            {% if position.status == "open" %}
+            <div class="center-align"><i class="medium material-icons green-text center" title="Open Position">perm_identity</i>
+            </div>
+            {% else %}
+            <a href="/user/{{ position.User.id }}">
+                {% if position.User.avatar == null %}
+                {{ position.User.first_name }} {{ position.User.last_name }}
+                {% else %}
+                <img class="center-align" src="/images/user/{{ position.User.avatar }}"
+                     alt="{{ position.User.first_name+' '+position.User.last_name }}"/>
+                {% endif %}
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

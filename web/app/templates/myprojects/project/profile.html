@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col s4 section">
+            <h4 class="header teal-text text-darken-1 center">
+                {{project.name}}
+            </h4>
+            <div class="container">
+                <div class="section">
+                    <div class="teal-text text-darken-1">{{__("Project Owner")}}</div>
+                    <div><a href="/user/{{project.User.id}}">{{project.User.first_name+" "+project.User.last_name}}</a></div>
+                </div>
+                <div class="section">
+                    <div class="teal-text text-darken-1">{{__("Created")}}</div>
+                    <div class="">{{project.getFormattedDate()}}</div>
+                </div>
+                <div class="section">
+                    <div class="teal-text text-darken-1">{{__("Status")}}</div>
+                    <div class="">{{__(project.getUpperCaseStatus())}}</div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="container">
+                <div class="section">
+                    <div class="teal-text text-darken-1">{{__("Skills Used")}}</div>
+                    <p class="bottom-three"></p>
+                    {% for position in project.Positions %}
+                        {% for positionSkill in position.Position_Skills %}
+                        <div class="chip projectr-pink-bg white-text cursor-pointer">{{positionSkill.Skill.name}}</div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col s8">
+            <div class="section">
+                <h5 class="header teal-text text-darken-1">{{__("Description")}}</h5>
+                {{ project.public_description }}
+            </div>
+
+            <div class="section" id="positions{{project.id}}">
+                <h5 class="header teal-text text-darken-1">{{__("Positions")}}</h5>
+                {% set i = 0 %}
+
+                {% for position in project.Positions %}
+                    {% if i == 0%}
+                        <div class="row">
+                    {% endif %}
+                    {% set i = i + 1 %}
+
+                    <div class="col s3 m3 l3">
+                        <div class="row">
+                            <div class="col m6 teal-text">{{ position.name }}</div>
+                            <div class="col m6 right right-align">
+                            {% if position.status == "open" or position.status == "rejected" %}
+                                <i class="small material-icons grey-text center" title="{{__('Open')}}">lock_open</i>
+                            {% elif position.status == "accepted" %}
+                                <i class="small material-icons green-text center" title="{{__('Accepted')}}">lock</i>
+                            {% elif position.status == "consider" %}
+                                <i class="small material-icons orange-text center" title="{{__('Considering')}}">lock_open</i>
+                            {% endif %}
+                            </div>
+                        </div>
+                        <div class="center center-align">
+                            {% if position.User %}
+                                <a href="/user/{{position.User.id}}">{{ position.User.getAvatar(60, 60) | safe }}</a>
+                            {% else %}
+                                <div>
+                                    <img src="/images/default.png" alt="not filled" class="circle" style="height: 60px; width: 60px">
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="center center-align">
+                            {% if position.status == "accepted" or position.status == "consider" %}
+                                <a href="/user/{{position.User.id}}">{{ position.User.first_name+" "+position.User.last_name }}</a>
+                            {% else %}
+                                <div class="">{{ __("Open Position") }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if i == 4%}
+                        {% set i = 0 %}
+                        </div>
+                        <div class="divider" style="margin-top: 10px; margin-bottom: 20px;"></div>
+                    {% endif %}
+                {% endfor %}
+
+                {% if i != 0%}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}

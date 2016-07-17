@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="section">
+        <a class="waves-effect waves-light btn" href="/user/myprojects/project/{{projectId}}/positions">
+            <i class="material-icons left">chevron_left</i>{{ __("Back") }}
+        </a>
+    </div>
+    <div class="divider"></div>
+
+    <div class="section">
+        <div class="row valign-wrapper">
+            <div class="col valign">
+                <h5 class="header teal-text text-darken-1">{{ __("Add Position") }}</h5>
+            </div>
+        </div>
+    </div>
+    {% include "error_messages.html" %}
+
+    <div class="row">
+        <form action="/user/myprojects/project/{{projectId}}/position/add" method="POST" class="col s12">
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input type="text" id="name" name="name" value="" />
+                    <label for="name">{{ __("Name") }}</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <input type="number" id="budget" name="budget"  value="0"/>
+                    <label for="budget">{{ __("Budget") }}</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <input type="number" id="hours" name="hours"  value="0"/>
+                    <label for="hours">{{ __("Hours") }}</label>
+                </div>
+                <div class="input-field col s12 m6">
+                    <select id="type" name="type">
+                        <option value="Developer" selected>{{ __("Developer") }}</option>
+                        <option value="Designer">{{ __("Designer") }}</option>
+                    </select>
+                    <label for="type">{{ __("Type") }}</label>
+                </div>
+            </div>
+            <button class="amber darken-1 btn" type="submit" name="action">{{ __("Add") }}</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('textarea').focus();
+    $('input').focus();
+</script>
+{% endblock %}

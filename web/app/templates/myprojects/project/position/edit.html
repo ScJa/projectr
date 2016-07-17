@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form id="submit-form" action="/user/myprojects/project/{{projectId}}/position/edit/{{position.id}}" method="POST" class="col s12">
+    <div class="container">
+        <div class="section">
+            <a class="waves-effect waves-light btn" href="/user/myprojects/project/{{position.ProjectId}}/positions">
+                <i class="material-icons left">chevron_left</i>{{ __("Back") }}
+            </a>
+            <div class="right">
+                <input class="amber darken-1 btn" type="submit" value="{{ __('Update') }}"/>
+            </div>
+        </div>
+        <div class="divider"></div>
+    </div>
+    <div class="container">
+        {% include "error_messages.html" %}
+
+        <div class="section">
+            <h5 class="teal-text">{{__("Position Data")}}</h5>
+            <div class="row">
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="name" name="name" value="{{position.name}}"/>
+                        <label for="name">{{ __("Name") }}</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input type="number" id="budget" name="budget" value="{{position.budget}}"/>
+                        <label for="budget">{{ __("Budget") }}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input type="number" id="hours" name="hours" value="{{position.hours}}"/>
+                        <label for="hours">{{ __("Hours") }}</label>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <select id="type" name="type">
+                            {% if position.type == "Developer" %}
+                            <option value="Developer" selected>{{ __("Developer") }}</option>
+                            <option value="Designer">{{ __("Designer") }}</option>
+                            {% else %}
+                            <option value="Developer">{{ __("Developer") }}</option>
+                            <option value="Designer" selected>{{ __("Designer") }}</option>
+                            {% endif %}
+                        </select>
+                        <label for="type">{{ __("Type") }}</label>
+                    </div>
+                </div>
+                <!--<button class="green btn" type="submit" name="action">{{ __("Update") }}</button>-->
+            </div>
+        </div>
+
+        {% if position.status != "accepted" %}
+            <!--h5 class="teal-text">{{__("Manual Assignment (Optional)")}}</h5>
+            <div class="row">
+                <div class="row">
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="email" name="email"/>
+                        <label for="email">{{ __("Email Address") }}</label>
+                    </div>
+                </div>
+            </di-->
+        {% endif %}
+
+        <!-- skills modal -->
+        <div id="skills-modal" class="modal modal-fixed-footer">
+            <div class="container modal-content">
+                <h5 class="header teal-text text-darken-1">{{ __("Suggestions") }}</h5>
+                <div class="collection">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="skills-modal-close-btn" class="modal-action waves-effect waves-yellow btn-flat">{{ __("Cancel") }}</a>
+                <a id="skills-modal-ok-btn" class="modal-action waves-effect waves-yellow btn-flat">{{ __("Ok") }}</a>
+            </div>
+        </div>
+
+        <!-- skill input modal -->
+        <div id="new-skill-modal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <h5 class="header teal-text text-darken-1">{{ __("Add new skill") }}</h5>
+                <div class="section">
+                    <p class="large-text">{{ __("No skill found, add new") }}</p>
+                    <h5 class="center teal-text text-darken-1">
+                        {{ __("New skill") }}:
+                        <span id="new-skill-field" class="header projectr-pink"></span>
+                    </h5>
+                </div>
+                <div class="section">
+                    <p class="large-text">{{ __("Set parent skill") }}:
+                        <select id="parent-skill" name="select-parent-skill">
+                            <option value="0">{{ __("No parent skill") }}</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="new-skill-modal-close-btn" class="modal-action waves-effect waves-yellow btn-flat">{{ __("Cancel") }}</a>
+                <a id="new-skill-modal-ok-btn" class="modal-action waves-effect waves-yellow btn-flat">{{ __("Ok") }}</a>
+            </div>
+        </div>
+
+        <div id="form-section" class="section">
+            <h5 class="teal-text">{{ __("Position Skills") }}</h5>
+            <div class="row">
+                <div class="input-field col s12 m6">
+                    <label for="skills-text">{{ __("Skill") }}</label>
+                    <input type="text" id="skills-text" name="skill"/>
+                </div>
+
+                <div class="input-field col s12 m4">
+                    <select id="level" name="select-level">
+                        <option value="4" data-icon="/images/icons/level-4.png" class="circle projectr-pink">{{ __("Guru") }}
+                        </option>
+                        <option value="3" data-icon="/images/icons/level-3.png" class="circle">{{ __("Expert") }}
+                        </option>
+                        <option value="2" data-icon="/images/icons/level-2.png" class="circle">{{ __("Advanced") }}
+                        </option>
+                        <option value="1" data-icon="/images/icons/level-1.png" class="circle">{{ __("Basic") }}
+                        </option>
+                    </select>
+                    <label>{{ __("Level") }}</label>
+                </div>
+
+                <div class="input-field col s12 m1 right">
+                    <a id="skill-add-btn" class="amber darken-1 btn btn-large btn-floating waves-effect waves-light">
+                        <i class="material-icons medium">add</i>
+                    </a>
+                </div>
+
+                <div class="col s12 m2">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- skills input -->
+                <div class="col s12 m6 l6">
+                    <!------ skill section ------>
+                    <div id="skill-section-4" name="4" class="row hoverable card-panel z-depth-1 section">
+                        <div class="valign-wrapper">
+                            <div class="col s2 valign">
+                                <div class="row center no-vertical-margin">
+                                    <h5 class="teal-text no-vertical-margin"><i class="material-icons medium">sentiment_very_satisfied</i></h5>
+                                </div>
+                                <div class="row center no-vertical-margin">
+                                    <div class="large-text projectr-pink"><b>{{ __("GURU") }}</b></div>
+                                </div>
+                            </div>
+                            <div id="skill-section-4-chips" class="col s10 valign skill-panel">
+                                {% for skill in skills %}
+                                    {% if skill.level == 4 %}
+                                    <div id='skill-{{ skill.id }}'
+                                         class="chip projectr-pink-bg white-text cursor-pointer">
+                                        {{ skill.name }}
+                                        <i class="material-icons white-text">close</i>
+                                    </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l6">
+                    <!------ skill section ------>
+                    <div id="skill-section-3" name="3" class="row hoverable card-panel z-depth-1 section">
+                        <div class="valign-wrapper">
+                            <div class="col s2 valign">
+                                <div class="row center no-vertical-margin">
+                                    <h5 class="teal-text no-vertical-margin"><i class="material-icons medium">mood</i></h5>
+                                </div>
+                                <div class="row center no-vertical-margin">
+                                    <div class="large-text projectr-pink"><b>{{ __("EXPERT") }}</b></div>
+                                </div>
+                            </div>
+                            <div id="skill-section-3-chips" class="col s10 valign skill-panel">
+                                {% for skill in skills %}
+                                    {% if skill.level == 3 %}
+                                        <div id='skill-{{ skill.id }}'
+                                             class="chip projectr-pink-bg white-text cursor-pointer">
+                                            {{ skill.name }}
+                                            <i class="material-icons white-text">close</i>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- skills input -->
+                <div class="col s12 m6 l6">
+                    <!------ skill section ------>
+                    <div id="skill-section-2" name="2" class="row hoverable card-panel z-depth-1 section">
+                        <div class="valign-wrapper">
+                            <div class="col s2 valign">
+                                <div class="row center no-vertical-margin">
+                                    <h5 class="teal-text no-vertical-margin"><i class="material-icons medium">sentiment_satisfied</i></h5>
+                                </div>
+                                <div class="row center no-vertical-margin">
+                                    <div class="large-text projectr-pink"><b>{{ __("ADVANCED") }}</b></div>
+                                </div>
+                            </div>
+                            <div id="skill-section-2-chips" class="col s10 valign skill-panel">
+                                {% for skill in skills %}
+                                    {% if skill.level == 2 %}
+                                        <div id='skill-{{ skill.id }}'
+                                             class="chip projectr-pink-bg white-text cursor-pointer">
+                                            {{ skill.name }}
+                                            <i class="material-icons white-text">close</i>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m6 l6">
+                    <!------ skill section ------>
+                    <div id="skill-section-1" name="1" class="row hoverable card-panel z-depth-1 section">
+                        <div class="valign-wrapper">
+                            <div class="col s2 valign">
+                                <div class="row center no-vertical-margin">
+                                    <h5 class="teal-text no-vertical-margin"><i class="material-icons medium">sentiment_neutral</i></h5>
+                                </div>
+                                <div class="row center no-vertical-margin">
+                                    <div class="large-text projectr-pink"><b>{{ __("BASIC") }}</b></div>
+                                </div>
+                            </div>
+                            <div id="skill-section-1-chips" class="col s10 valign skill-panel">
+                                {% for skill in skills %}
+                                    {% if skill.level == 1 %}
+                                        <div id='skill-{{ skill.id }}'
+                                             class="chip projectr-pink-bg white-text cursor-pointer">
+                                            {{ skill.name }}
+                                            <i class="material-icons white-text">close</i>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="txt-dup-skill" value="{{ __('Skill already used') }}" readonly="readonly" type="hidden" />
+    <input id="txt-skill-missing" value="{{ __('Skill missing') }}" readonly="readonly" type="hidden" />
+    <input id="txt-skill-added" value="{{ __('New skill added') }}" readonly="readonly" type="hidden" />
+</form>
+
+
+<script>
+    $('textarea').focus();
+    $('input').focus();
+</script>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript" src="/js/skill_management.js"></script>
+{% endblock %}

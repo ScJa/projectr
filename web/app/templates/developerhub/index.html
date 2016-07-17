@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="section">
+        <div class="row valign-wrapper">
+            <div class="col valign">
+                <h4 class="projectr-pink">{{ __("develop") }}</h4>
+            </div>
+            <div class="col valign">
+                <h5 class="center"><i class="material-icons medium">settings</i></h5>
+            </div>
+            <div class="col m4 right-align valign">
+                <a class="btn right-align" href="/user/edit/develop">{{ __("Edit Developer Profile") }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+
+        {% set p = 0 %}
+        {% for position in positions %}
+        {% if position.status == "accepted"%}
+        {% set p = 1 %}
+        {% endif %}
+        {% endfor %}
+
+        {% if p == 1 %}
+        <div class="row">
+            <h5 class="header teal-text text-darken-1">{{ __("Participations") }}</h5>
+            <div class="col s6">
+                {% for position in positions %}
+                {% if position.status == "accepted"%}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <a class="teal-text text-darken-1" href="/user/myprojects/project/{{ position.Project.id }}/public">
+                                {{ position.Project.name }} - {{ position.name }}
+                            </a>
+                        </span>
+                        <p>{{ __("Budget") }}: {{ position.budget }}</p>
+                        <p>{{ __("Hours") }}: {{ position.hours }}</p>
+                        <p>{{ position.Project.short_description }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a class="red-text text-darken-2" href="/user/developer/leave/{{position.id}}">{{ __("Leave Project") }}</a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+
+        {% set p = 0 %}
+        {% for position in positions %}
+        {% if position.status == "consider"%}
+        {% set p = 1 %}
+        {% endif %}
+        {% endfor %}
+
+        {% if p == 1%}
+        <div class="row">
+            <h5 class="header teal-text text-darken-1">{{ __("Possible Matches") }}</h5>
+            <div class="col s6">
+                {% for position in positions %}
+                {% if position.status == "consider"%}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <a class="teal-text text-darken-1" href="/user/myprojects/project/{{ position.Project.id }}/public">
+                                {{ position.Project.name }} - {{ position.name }}
+                            </a>
+                        </span>
+                        <p>{{ __("Budget") }}: {{ position.budget }}</p>
+                        <p>{{ __("Hours") }}: {{ position.hours }}</p>
+                        <p>{{ position.Project.short_description }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a class="amber-text text-darken-1" href="/user/developer/accept/{{position.id}}">{{ __("Accept") }}</a>
+                        <a class="red-text text-darken-2" href="/user/developer/decline/{{position.id}}">{{ __("Decline") }}</a>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        {% set p = 0 %}
+        {% for position in positions %}
+        {% if position.status == "rejected"%}
+        {% set p = 1 %}
+        {% endif %}
+        {% endfor %}
+
+        {% if p == 1 %}
+        <div class="row">
+            <!-- TODO hide/show button -->
+            <h5 class="header teal-text text-darken-1">{{ __("Rejected") }}</h5>
+            <div class="col s6">
+                {% for position in positions %}
+                {% if position.status == "rejected"%}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">
+                            <a class="teal-text text-darken-1" href="/user/myprojects/project/{{ position.Project.id }}/public">
+                                {{ position.Project.name }} - {{ position.name }}
+                            </a>
+                        </span>
+                        <p>{{ __("Budget") }}: {{ position.budget }}</p>
+                        <p>{{ __("Hours") }}: {{ position.hours }}</p>
+                        <p>{{ position.Project.short_description }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

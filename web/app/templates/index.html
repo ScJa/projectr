@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+        <div class="container">
+            <br><br>
+            <h1 class="header center teal-text text-darken-2">{{ __("projectr") }}</h1>
+            <div class="row center">
+                <h5 class="header col s12 teal-text text-darken-1 projectr-pink">{{ __("Get work done") }}</h5>
+            </div>
+            <div class="row center">
+                <a href="/user/register" class="btn-large waves-effect waves-light teal">{{ __("Get started today") }}</a>
+            </div>
+            <br><br>
+
+        </div>
+    </div>
+    <div class="parallax"><img src="/images/pexels-photo.jpg" alt="Unsplashed background img 1"></div>
+</div>
+
+<div class="container">
+    <div class="section">
+
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons medium">mode_edit</i></h2>
+                    <h5 class="center projectr-pink">{{ __("Create") }}</h5>
+                    <p class="light">
+                        Post your project and receive suggestions within minutes. Our reputation
+                        system will make it easy to find the perfect freelancer for your job. If your idea establishes
+                        and you build a start up around it, you already have found the right people to support you.
+                        It's the simplest and safest way to get work done online!
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons medium">settings</i></h2>
+                    <h5 class="center projectr-pink">{{ __("Develop") }}</h5>
+                    <p class="light">
+                        Sign in and enter your skills and get matched to projects which suit you best. Decide on which
+                        projects you want to participate and develop on ideas in a team of people which are the best
+                        matches for their positions. Solid back-end or creative front-end developer - you decide by the
+                        choice of your skills that will connect you to suitable positions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col s12 m4">
+                <div class="icon-block">
+                    <h2 class="center brown-text"><i class="material-icons medium">web</i></h2>
+                    <h5 class="center projectr-pink">{{ __("Design") }}</h5>
+                    <p class="light">
+                        Want to get creative and work on ideas with people that are the best choices for their positions?
+                        Sign in and set up your designer profile so you can get matched to projects that are best for you,
+                        and which will profit from your skill set. Support the project with distinctive designs and art work,
+                        so that it reaches its full potential.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="container">
+    <div class="row">
+        <div class="col l6 s12">
+            <a href="/about"><h5 class="white-text">{{ __("ABOUT US") }}</h5></a>
+            <p class="white-text">Suspendisse potenti. Aenean ullamcorper tincidunt felis, posuere semper lectus aliquam a. Integer ultrices, turpis ut vestibulum condimentum, sapien quam tempor velit, sit amet rhoncus purus ipsum sit amet ex. Mauris ut auctor sem, non placerat nibh. Maecenas pulvinar tristique tincidunt.</p>
+        </div>
+        <div class="col l3 s12">
+            <a href="/faq"><h5 class="white-text">{{ __("FAQ") }}</h5></a>
+            <p class="white-text">Suspendisse potenti. Aenean ullamcorper tincidunt felis, posuere semper lectus aliquam a. Integer ultrices, turpis ut vestibulum condimentum.</p>
+        </div>
+        <div class="col l3 s12">
+            <a href="/contact"><h5 class="white-text">{{ __("CONTACT US") }}</h5></a>
+            <p class="white-text">Suspendisse potenti. Aenean ullamcorper tincidunt felis, posuere semper lectus aliquam a. Integer ultrices, turpis ut vestibulum condimentum.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

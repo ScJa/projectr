@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container paddingTopBottom">
+    <div class="section">
+        <form action= "/admin/addSkill" method="post">
+            <fieldset>
+                <h5 id="title">New Skill</h5>
+                <p>
+                    <label for="name">Skill Name:</label>
+                    <input type="text" id="name" name="name" placeholder="The name of the skill" />
+                </p>
+                <p>
+                    <label for="parentSkillId">Parent Skill ID:</label>
+                    <input type="number" id="parentSkillId" name="parentSkillId" placeholder="ID of the parent skill" />
+                </p>
+                <br>
+                <button class="light-blue btn" type="submit">Submit</button>
+                <div class="btn" onclick="loadSkill('', '')">Clear</div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="divider"></div>
+    <div class="section">
+        <h5>Existing Skills</h5>
+        <div class="row left">
+            {% for skill in skills %}
+                <div class="btn" onclick="loadSkill('{{skill.name}}', '{{skill.parent_Skill_id}}')" style="margin-bottom: 5px;">
+                    {{ skill.name }} (ID: {{ skill.id }}, Parent: {{ skill.parent_Skill_id }})
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+    function loadSkill(name, parent) {
+        $("#name").val(name);
+        $("#parentSkillId").val(parent)
+        if (name === '') {
+            $("#title").html('New Skill');
+        } else {
+            $("#title").html('Edit Skill "'+name+'"');
+        }
+    }
+</script>
+{% endblock %}

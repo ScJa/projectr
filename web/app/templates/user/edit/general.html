@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% include "error_messages.html" %}
+
+    <div class="row">
+
+            <ul class="collapsible" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header projectr-pink active"><i class="material-icons">perm_identity</i>
+                        {{ __("Account Information") }}
+                    </div>
+                    <div class="collapsible-body collapsible-form">
+                        <form id="form" action="/user/edit" method="post" class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <input type="text" id="first_name" name="first_name" placeholder="{{ user.first_name }}"
+                                           value="{{ user.first_name }}"/>
+                                    <label for="first_name">{{ __("First Name") }}</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input type="text" id="last_name" name="last_name" placeholder="{{ user.last_name }}"
+                                           value="{{ user.last_name }}"/>
+                                    <label for="last_name">{{ __("Last Name") }}</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <label for="email">{{ __("E-Mail") }}</label>
+                                    <input type="text" id="email" name="email" placeholder="{{ user.email }}"
+                                           value="{{ user.email }}"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s4 center-align">
+                                    <input type="checkbox" id="owner" class="filled-in" name="owner" {% if user.owner
+                                           %}checked{% endif %}/>
+                                    <label for="owner">{{ __("Project owner") }}</label>
+                                </div>
+
+                                <div class="col s4 center-align">
+                                    <input type="checkbox" id="developer" class="filled-in" name="developer" {% if
+                                           user.developer %}checked{% endif %}/>
+                                    <label for="developer">{{ __("Developer") }}</label>
+                                </div>
+
+                                <div class="col s4 center-align">
+                                    <input type="checkbox" id="designer" class="filled-in" name="designer" {% if
+                                           user.designer %}checked{% endif %}/>
+                                    <label for="designer">{{ __("Designer") }}</label>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <button class="amber darken-1 btn right-align right" type="submit" name="action" value="editProfile">
+                                    {{ __("Save Changes") }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header projectr-pink"><i class="material-icons">perm_identity</i>
+                        {{ __("Delete Account") }}
+                    </div>
+                    <div class="collapsible-body collapsible-form">
+                        <form action="/user/delete" method="post">
+
+                            <div class="row">
+                                <div class="col s12 m6">
+                                    {{__("Please enter your password to delete your account.")}}
+                                    {{__("Once your account has been deleted it cannot be recovered.")}}
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <label for="password">{{ __("Password") }}</label>
+                                    <input type="password" id="password" name="password" placeholder="{{ __('Password') }}" value=""/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col s12 m12">
+                                    <button class="red darken-2 btn right right-align" type="submit" name="action" value="deleteProfile">
+                                        {{ __("Delete Profile") }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <a href="#avatar-modal" class="modal-trigger projectr-pink">
+                        <div class="collapsible-header projectr-pink"><i class="material-icons">perm_media</i>{{ __("Avatar") }}</div>
+                    </a>
+                </li>
+                <li>
+                    <div class="collapsible-header projectr-pink"><i class="material-icons">assignment</i>{{ __("Linked Services") }}
+                    </div>
+                    <div class="collapsible-body">
+                        <div class="container">
+                            {% for service in linkedServices %}
+                            <div class="row">
+                                <div class="col s5 m5 l5 ">{{service.service_id}}</div>
+                                <div class="col s2 m2 l2"><i class="small material-icons green-text">done</i></div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header projectr-pink"><i class="material-icons">note_add</i>{{ __("Additional Information") }}</div>
+                    <div class="collapsible-body collapsible-form">
+                        <form id="hours-form" action="/user/edit/hours" method="post">
+                            <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <input type="number" step="0.1"  id="free_hours" name="free_hours" placeholder="{{ user.free_hours }}"
+                                           value="{{ user.free_hours }}"/>
+                                    <label for="free_hours">{{ __("Available Hours for Projects per Week") }}</label>
+                                </div>
+                                <div class="input-field col s12 m6">
+                                    <input type="number" step="0.01"  id="price_per_hour" name="price_per_hour" placeholder="{{ user.price_per_hour }}"
+                                           value="{{ user.price_per_hour }}"/>
+                                    <label for="price_per_hour">{{ __("Price per Work Hour") }}</label>
+                                </div>
+                                <div class="right">
+                                    <button class="amber darken-1 btn right-align right" type="submit" name="action" value="editProfile">
+                                        {{ __("Save Changes") }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+
+    </div>
+</div>
+
+<div id="avatar-modal" class="modal" id="avatar-modal">
+    <iframe src="/user/upload-avatar"></iframe>
+    <div class="modal-footer">
+        <div class="col s2 offset-s10">
+            <button class="amber darken-1 btn right-align" type="submit" name="action" value="editProfile" id="close-modal">{{
+                __("Done") }}
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        $('.collapsible').collapsible({
+            accordion: true // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+        });
+
+        $('.modal-trigger').leanModal();
+
+        $("#close-modal").click(function () {
+            $('#avatar-modal').closeModal();
+        });
+    });
+</script>
+{% endblock %}

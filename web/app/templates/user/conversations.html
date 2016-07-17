@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row section">
+        <h5 class="teal-text">{{ __("Conversations") }}</h5>
+    </div>
+
+    <div class="row">
+      {% if conversations %}
+      <ul class="collection">
+        {% for conversation in conversations %}
+          <li class="collection-item avatar">
+            {% if conversation.avatar %}
+                <span class="center-align"><a href="/user/{{conversation.user_id}}"><img src="/uploads/avatar/{{ conversation.avatar }}" alt="not filled" class="circle" style="height: 60px; width: 60px"></a></span>
+            {% else %}
+                <span class="center-align"><img src="/images/default.png" alt="avatar" class="circle" style="height: 60px; width: 60px"></span>
+            {% endif %}
+            <span class="title" style="margin-left: 20px;"><a href="/user/conversations/{{conversation.user_id}}">{{conversation.first_name}} {{conversation.last_name}}</a></span>
+            <p>
+            </p>
+          </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+    </div>
+</div>
+
+
+{% endblock %}

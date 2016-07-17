@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% set positionCount = 0 %}
+{% for position in profile_user.Positions %}
+    {% if position.status == "accepted" %}
+        {% set positionCount = positionCount + 1 %}
+    {% endif %}
+{% endfor %}
+
+{% set projectCount = 0 %}
+    {% for project in profile_user.Projects %}
+    {% set projectCount = projectCount + 1 %}
+{% endfor %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col s4">
+            <div class="section ">
+                <div class="container lighten-3 center center-align">
+                    <div class="pin-top left-align">
+                        {% if not user.isAnonymous() %}
+                        <a href="/user/conversations/{{ profile_user.id }}" title="{{__('Send Message')}}">
+                            <i class="material-icons grey-text cursor-pointer profileSendMail">mail</i>
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    {{ profile_user.getAvatar(150, 150)|safe }}
+                    <h4 class="header teal-text text-darken-1 center">
+                        {{profile_user.first_name}} {{profile_user.last_name}}
+                    </h4>
+                    <p class="center">
+                        {% if profile_user.owner %}
+                        <span><i class="material-icons" title="{{__('Project Owner')}}">mode_edit</i></span>
+                        {% else %}
+                        <span><i class="material-icons grey-text" title="{{__('Project Owner')}}">mode_edit</i></span>
+                        {% endif %}
+                        {% if profile_user.developer %}
+                        <span><i class="material-icons" title="{{__('Developer')}}">settings</i></span>
+                        {% else %}
+                        <span><i class="material-icons grey-text" title="{{__('Developer')}}">settings</i></span>
+                        {% endif %}
+                        {% if profile_user.designer %}
+                        <span><i class="material-icons" title="{{__('Designer')}}">web</i></span>
+                        {% else %}
+                        <span><i class="material-icons grey-text" title="{{__('Designer')}}">web</i></span>
+                        {% endif %}
+                    </p>
+                    {% if profile_user.average %}
+                    <p class="center">
+                        <select class="showrating" data-target="average-rating-{{profile_user.id}}">
+                            <option value=""></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </p>
+                    <input id="average-rating-{{profile_user.id}}" value="{{ profile_user.average }}" readonly="readonly" type="hidden"/>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="section ">
+                <div class="container">
+                    <div class="section">
+                        <div class="teal-text text-darken-1">{{__("Email")}}</div>
+                        <div class="">{{ profile_user.email }}</div>
+                    </div>
+                    {% if profile_user.average %}
+                    <div class="section">
+                        <div class="teal-text text-darken-1">{{ __("Average Rating") }}</div>
+                        <div class="">{{ profile_user.average }}</div>
+                    </div>
+                    {% endif %}
+                    <div class="section">
+                        <div class="teal-text text-darken-1">{{__("Owned Projects")}}</div>
+                        <div class="">{{ projectCount }}</div>
+                    </div>
+                    <div class="section">
+                        <div class="teal-text text-darken-1">{{__("Contributions")}}</div>
+                        <div class="">{{ positionCount }}</div>
+                    </div>
+                    {% if profile_user.free_hours %}
+                    <div class="section">
+                        <div class="teal-text text-darken-1">{{__("Time for Projects")}}</div>
+                        <div class="">{{ profile_user.free_hours }} h/{{__("week")}}</div>
+                    </div>
+                    {% endif %}
+                    {% if profile_user.price_per_hour and profile_user.price_per_hour > 0 %}
+                    <div class="section">
+                        <div class="teal-text text-darken-1">{{__("Salary")}}</div>
+                        <div class="">{{ profile_user.price_per_hour }} €/{{__("hour")}}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="section ">
+                <div class="container">
+                    {% for service in profile_user.LinkedServices %}
+                        <div class="section">
+                            <div class="">
+                                <a href="{{service.getProfileUrl()}}" target="_blank">
+                                    <div class="teal-text text-darken-1">{{service.service_id}}</div>
+                                </a>
+                            </div>
+                            {% set customData = service.getCustomData() %}
+                            {% for key, value in customData %}
+                            <div class="row no-padding no-vertical-margin">
+                                <div class="col s6 m6 l6">{{__(key)}}</div><div class="col s6 m6 l6">{{value}}</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col s8">
+            <div class="section">
+                <h4 class="header teal-text text-darken-1">{{__("Skills")}}</h4>
+                <p class="bottom-three"></p>
+                {% for userSkill in profile_user.User_Skills %}
+                <div class="chip projectr-pink-bg white-text cursor-pointer">{{userSkill.Skill.name}}</div>
+                {% endfor %}
+            </div>
+
+            <div class="section">
+                <h4 class="teal-text">{{ __("Participations") }}</h4>
+
+                {% for position in profile_user.Positions %}
+                    {% if position.type == "Owner" %}
+                    <div class="row card-panel section">
+                        <div class="card-content">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="header teal-text text-darken-1">
+                                        <a href="/user/myprojects/project/{{ position.Project.id }}/public">
+                                            {{ position.Project.name }} - {{ position.name }}
+                                        </a>
+                                    </h5>
+                                    {{ position.Project.public_description }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+
+                {% for position in profile_user.Positions %}
+                {% if position.type == "Developer" and position.status == "accepted" %}
+                <div class="row card-panel section">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="header teal-text text-darken-1">
+                                    <a href="/user/myprojects/project/{{ position.Project.id }}/public">
+                                        {{ position.Project.name }} - {{ position.name }}
+                                    </a>
+                                </h5>
+                                {{ position.Project.public_description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                {% for position in profile_user.Positions %}
+                {% if position.type == "Designer" and position.status == "accepted" %}
+                <div class="row card-panel section">
+                    <div class="card-content">
+                        <div class="row">
+                            <div class="col">
+                                <h5 class="header teal-text text-darken-1">
+                                    <a href="/user/myprojects/project/{{ position.Project.id }}/public">
+                                        {{ position.Project.name }} - {{ position.name }}
+                                    </a>
+                                </h5>
+                                {{ position.Project.public_description }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+{% endblock %}
+

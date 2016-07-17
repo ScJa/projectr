@@ -1,0 +1,25 @@
+{% block content %}
+
+<div class="card">
+    <div class="card-content">
+        <div class="row">
+            <div class="col m3"><h5 class="header teal-text text-darken-1">{{ project.name }}</h5></div>
+        </div>
+        <div class="row">
+            <div class="col m3">{{ __("Positions") }}:</div>
+            <div class="col m9" id="positions{{project.id}}">
+                <script>loadPositions("{{project.id}}", "positions{{project.id}}");</script>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m3">{{ __("Budget") }}:</div>
+            <div class="col m9">{{ project.budget }}</div>
+        </div>
+        <div class="row">
+            <div class="col m3">{{ __("Description") }}:</div>
+            <div class="col m9">{{ project.public_description }}</div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

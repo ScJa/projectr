@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col m2 s3">
+            <div class="icon-block left">
+                <h2 class="center brown-text"><i class="material-icons medium">mode_edit</i></h2>
+                <h2 class="center brown-text"><i class="material-icons medium">settings</i></h2>
+                <h2 class="center brown-text"><i class="material-icons medium">web</i></h2>
+            </div>
+        </div>
+        <form action="/user/login" method="post" class="col m6 s9">
+            <div class="row">
+                <h5 class="header teal-text text-darken-1">{{ __("Sign In!") }}</h5>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m8">
+                    <input type="text" id="username" name="username" />
+                    <label for="username">{{ __("E-Mail") }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m8">
+                    <input type="password" id="password" name="password" />
+                    <label for="password">{{ __("Password") }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <button class="amber darken-1 btn" type="submit" name="action">{{ __("Go") }}</button>
+            </div>
+        </form>
+        <div class="col m4 s12">
+            <div class="card-panel z-depth-3">
+                <div class="row">
+                     <h5 class="header grey-text text-darken-1 center-align">{{ __("Sign in with:") }}</h5>
+                </div>
+                <div class="row">
+                    <form method="get" action="/linkedin/auth/linkedin">
+                        <button class="teal btn col s12 m12" name="linkedIn">{{ __("LinkedIn") }}</button>
+                    </form>
+                </div>
+                <div class="row">
+                    <form method="get" action="/xing/auth/xing">
+                        <button class="teal btn col s12 m12" name="xing">{{ __("Xing") }}</button>
+                    </form>
+                </div>
+                <div class="row">
+                    <form action="/github/auth/github" method="get">
+                        <button class="teal btn col s12 m12" type="submit">{{ __("Github") }}</button>
+                    </form>
+                </div>
+                <div class="row">
+                    <form action="/deviantart/auth/deviantart" method="get">
+                        <button class="teal btn col s12 m12" type="submit">{{ __("DeviantArt") }}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

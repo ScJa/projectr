@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<input type="text" style="display: none;" value="{{other_user.id}}" id="otherUserId">
+<div class="container">
+    <div class="section">
+        <a class="waves-effect waves-light btn" href="/user/conversations">
+            <i class="material-icons left">chevron_left</i>{{ __("Back") }}
+        </a>
+    </div>
+    <div class="divider"></div>
+</div>
+<div class="container">
+
+    <div class="row section">
+        <h5 class="teal-text">{{ __("Conversation") }} - {{other_user.first_name}} {{other_user.last_name}}</h5>
+    </div>
+
+    <div class="row">
+
+      <ul class="collection" id="conversationWindow">
+        {% if conversation %}
+            {% for message in conversation.ChatMessages %}
+              <li class="collection-item {% if message.UserId == user.id %}grey lighten-3{% endif %}">
+                <p>{{message.content}}</p>
+              </li>
+            {% endfor %}
+        {% endif %}
+      </ul>
+
+      <div class="row valign-wrapper">
+        <div class="input-field col s10 valign">
+          <textarea id="messageField" class="materialize-textarea"></textarea>
+          <label for="messageField">Message</label>
+        </div>
+        <a class="waves-effect waves-light btn col s2 valign amber darken-1" id="chat-button" style="margin-top: 30px;">Send</a>
+      </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

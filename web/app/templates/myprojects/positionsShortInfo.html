@@ -1,0 +1,74 @@
+<div class="row">
+    {% set i = 0 %}
+
+    {% for position in positions %}
+        {% if i == 0 %}
+            <div class="row">
+        {% endif %}
+        <div class="col s6 m4 l4">
+            <div class="card-panel z-depth-1">
+                <div class="row"><div class="col m12">{{ position.name }}</div></div>
+                <div class="row">
+                    <div class="col m6">{{ __("Status") }}</div>
+                    {% if position.status == "open" %}
+                        <div class="col m6 amber-text">{{ __(position.status) }}</div>
+                    {% elif position.status == "accepted" %}
+                        <div class="col m6 green-text">{{ __(position.status) }}</div>
+                    {% elif position.status == "rejected" %}
+                        <div class="col m6 red-text">{{ __(position.status) }}</div>
+                    {% else %}
+                        <div class="col m6 amber-text">{{ __(position.status) }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="row" style="margin-bottom: 0px;">
+                    <div class="col m12">
+                        {% if position.status == "open" %}
+                            <div class="center-align">
+                                <i class="medium material-icons green-text center" title="Open Position">perm_identity</i>
+                                <div class="black-text">
+                                    {{ __("Open Position") }}
+                                </div>
+                                <div class="card-action left-align">
+                                    <a class="amber-text text-darken-1 cursor-pointer" href="/user/myprojects/project/{{projectId}}/position/recommendations/{{position.id}}">
+                                        {{ __("Recommendations") }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% elif position.status == "rejected" %}
+                            <div class="center-align">
+                                <img class="medium center" src="/images/user/{{ position.User.avatar }}" width="60px" height="60px"
+                                     alt="{{ position.User.first_name+' '+position.User.last_name }}" />
+                                <br />
+                                <a class="cursor-pointer blue-text" href="/user/{{ position.User.id }}">
+                                    {{ position.User.first_name }} {{ position.User.last_name }}
+                                </a>
+                                <div class="card-action left-align">
+                                    <a class="amber-text text-darken-1 cursor-pointer" href="/user/myprojects/project/{{projectId}}/position/recommendations/{{position.id}}">
+                                        {{ __("Recommendations") }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% else  %}
+                            <div class="center-align">
+                                <img class="medium center" src="/images/user/{{ position.User.avatar }}" width="60px" height="60px"
+                                     alt="{{ position.User.first_name+' '+position.User.last_name }}" />
+                                <br />
+                                <a class="cursor-pointer blue-text" href="/user/{{ position.User.id }}">
+                                    {{ position.User.first_name }} {{ position.User.last_name }}
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% set i = i + 1 %}
+        {% if i == 3 %}
+            </div>
+            {% set i = 0 %}
+        {% endif %}
+
+    {% endfor %}
+</div>
